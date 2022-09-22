@@ -13,6 +13,17 @@ class App extends React.Component {
       { id: 5, value: 6 },
     ],
   };
+
+  constructor(props) {
+    super(props);
+    console.log("App - Constructor");
+  }
+
+  componentDidMount() {
+    //Ajax call
+    console.log("App - Mounted");
+  }
+
   handleIncrement = (counter) => {
     const counters = [...this.state.counters];
     const index = counters.indexOf(counter);
@@ -21,11 +32,21 @@ class App extends React.Component {
     this.setState({ counters });
   };
 
+  handleDecrement = (counter) => {
+    const counters = [...this.state.counters];
+    const index = counters.indexOf(counter);
+    counters[index] = { ...counter };
+
+    counters[index].value--;
+    this.setState({ counters });
+  };
+
   handleDelete = (counterId) => {
     const counters = this.state.counters.filter((c) => c.id !== counterId);
     this.setState({ counters });
     //  console.log('Delete Event hancler called on counter #',counterId);
   };
+
   handleReset = () => {
     const counters = this.state.counters.map((c) => {
       c.value = 0;
@@ -33,7 +54,10 @@ class App extends React.Component {
     });
     this.setState({ counters });
   };
+
   render() {
+    console.log("App - Rendered");
+
     return (
       <React.Fragment>
         <Navbar
@@ -45,6 +69,7 @@ class App extends React.Component {
             onReset={this.handleReset}
             onIncrement={this.handleIncrement}
             onDelete={this.handleDelete}
+            onDecrement={this.handleDecrement}
           />
         </main>
       </React.Fragment>
